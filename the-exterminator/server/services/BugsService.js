@@ -21,7 +21,7 @@ class BugsService {
   }
 
   async getTrackedBugs(bugId) {
-    const trackedBugs = await dbContext.TrackedBugs.find({ bugId }).populate('bug', 'title priority description closed closedDate creatorId')
+    const trackedBugs = await dbContext.TrackedBugs.find({ bugId }).populate('bug').populate('tracker')
     return trackedBugs
   }
 
@@ -54,6 +54,11 @@ class BugsService {
     bug.closed = true
     await bug.save()
     return bug
+  }
+
+  async getTrackedBugsByAccount(accountId) {
+    const trackedBugs = await dbContext.TrackedBugs.find({ accountId }).populate('bug').populate('tracker')
+    return trackedBugs
   }
 }
 
