@@ -11,6 +11,11 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
-}
 
+  async getTrackedBugs() {
+    const res = await api.get('account/trackedbugs')
+    logger.log('getTracked', res)
+    AppState.accountBugs = res.data
+  }
+}
 export const accountService = new AccountService()

@@ -8,6 +8,7 @@ class BugsService {
     const res = await api.get('api/bugs')
     logger.log('getBugs', res)
     AppState.bugs = res.data
+    AppState.sortedBugs = res.data
   }
 
   async createBug(bugData) {

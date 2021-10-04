@@ -31,10 +31,22 @@
             <p>
               <b class="text-success">Bug Details:</b> {{ currentBug.description }}
             </p>
-            <div>
-              <button @click="createTrackedBug(currentBug.id)" type="button" class="btn btn-success">
-                Track Bug
-              </button>
+            <div v-if="currentBug.closed">
+              <p class="text-danger">
+                Can't track a dead bug
+              </p>
+            </div>
+            <div v-else>
+              <div v-if="trackedCheck">
+                <button @click="deleteTrackedBug(account.id)" type="button" class="btn btn-danger">
+                  Stop Tracking
+                </button>
+              </div>
+              <div v-else>
+                <button @click="createTrackedBug(currentBug.id)" type="button" class="btn btn-success">
+                  Track Bug
+                </button>
+              </div>
             </div>
           </div>
           <div class="d-flex col-md-4">
@@ -48,7 +60,9 @@
               {{ currentBug.creator.name }}
             </p>
             <div v-if="currentBug.closed">
-              <p>can't edit the dead</p>
+              <p class="text-danger">
+                can't edit the dead
+              </p>
             </div>
             <div v-else>
               <button v-if="account.id === currentBug.creatorId" type="button" class="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#edit-form">
@@ -113,7 +127,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from '@vue/runtime-core'
+import { computed, onMounted, ref, watchEffect } from '@vue/runtime-core'
 import { useRoute } from 'vue-router'
 import Pop from '../utils/Pop.js'
 import { bugsService } from '../services/BugsService.js'
@@ -124,6 +138,7 @@ export default {
   setup() {
     const editable = ref({})
     const route = useRoute()
+
     onMounted(async() => {
       try {
         await bugsService.getBugById(route.params.bugId)
@@ -140,6 +155,11 @@ export default {
       } catch (error) {
         Pop.toast(error.message, 'error')
       }
+      try {
+        await trackedBugsService.checkTracked()
+      } catch (error) {
+        Pop.toast(error.message, 'error')
+      }
     })
     return {
       editable,
@@ -148,6 +168,7 @@ export default {
       account: computed(() => AppState.account),
       trackedBugs: computed(() => AppState.trackedBugs),
       notes: computed(() => AppState.notes),
+      trackedCheck: computed(() => AppState.trackedCheck),
 
       async createNote() {
         try {
@@ -169,6 +190,15 @@ export default {
       async createTrackedBug(bugId) {
         try {
           await trackedBugsService.createTrackedBug(bugId)
+          await bugsService.getTrackedBugs(this.currentBug.id)
+          await trackedBugsService.checkTracked()
+        } catch (error) {
+          Pop.toast(error.message, 'error')
+        }
+      },
+      async deleteTrackedBug(accountId) {
+        try {
+          await trackedBugsService.deleteTrackedBug(accountId)
         } catch (error) {
           Pop.toast(error.message, 'error')
         }
