@@ -4,7 +4,7 @@ import { bugsService } from './BugsService.js'
 
 class TrackedBugsService {
   async createTrackedBug(body, oldTracked, accountId) {
-    const copy = oldTracked.find(t => t.accountId === accountId)
+    const copy = oldTracked.filter(t => t.accountId === accountId)
 
     if (copy.accountId === accountId) {
       throw new BadRequest("can't track bugs more than once")

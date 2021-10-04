@@ -7,8 +7,7 @@ export const BugSchema = new Schema({
   description: { type: String, required: true, minlength: 3, maxlength: 150 },
   closed: { type: Boolean, required: true, default: false },
   closedDate: { type: Date, required: false },
-  creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: false }
-  // NOTE                                                             ^^^^^ this may need to be false
+  creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true }
 },
 { timestamps: true, toJSON: { virtuals: true } }
 )
