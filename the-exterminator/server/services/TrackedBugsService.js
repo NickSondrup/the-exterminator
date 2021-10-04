@@ -4,10 +4,11 @@ import { bugsService } from './BugsService.js'
 
 class TrackedBugsService {
   async createTrackedBug(body, oldTracked, accountId) {
-    const copy = oldTracked.filter(t => t.accountId === accountId)
-
-    if (copy.accountId === accountId) {
-      throw new BadRequest("can't track bugs more than once")
+    for (let i = 0; i < oldTracked.length; i++) {
+      const check = oldTracked[i]
+      if (check.accountId.toString() === accountId) {
+        throw new BadRequest("can't track bugs more than once")
+      }
     }
     const newTracked = await dbContext.TrackedBugs.create(body)
     await newTracked.populate('bug')
