@@ -1,6 +1,12 @@
 <template>
-  <div class="mx-2">
-    <img :src="trackedBug.tracker.picture" alt="" height="65" :aria-label="trackedBug.tracker.name" :title="trackedBug.tracker.name">
+  <div class="mx-1">
+    <img :src="trackedBug.tracker.picture"
+         alt=""
+         height="50"
+         class="mt-2 rounded-circle"
+         :aria-label="trackedBug.tracker.name"
+         :title="trackedBug.tracker.name"
+    >
   </div>
   <!-- <div>
     <p>{{ trackedBug.tracker.name }}</p>

@@ -45,7 +45,6 @@ class BugsService {
     const res = await api.put(`api/bugs/${bugId}`, edited)
     logger.log('editBug', res)
     AppState.currentBug = res.data
-    // this.getBugById(bugId)
   }
 
   async closeBug(bugId) {

@@ -7,7 +7,7 @@
   <div v-if="accountBugs">
     <div class="container">
       <div class="row">
-        <AccountBug v-for="b in accountBugs" :key="b.id" :bug="b" class="col-4" />
+        <AccountBug v-for="b in accountBugs" :key="b.id" :bug="b" class="col-lg-4" />
       </div>
     </div>
   </div>

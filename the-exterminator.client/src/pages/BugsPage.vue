@@ -6,21 +6,21 @@
           <button type="button" class="btn btn-success m-2" @click="closedFilter = !closedFilter">
             Filter
           </button>
-          <button v-if="sorted === false" type="button" class="btn btn-success m-2" @click="sortBugs()">
+          <button v-if="sorted === false" type="button" class="btn btn-warning m-2" @click="sortBugs()">
             Sort by Threat
           </button>
-          <button v-if="sorted === true" type="button" class="btn btn-success m-2" @click="toggleAscending()">
+          <button v-if="sorted === true" type="button" class="btn btn-warning m-2" @click="toggleAscending()">
             Sort by Threat
           </button>
-          <button @click="unsortBugs()">
+          <button @click="unsortBugs()" class="btn btn-success">
             sort by Most Recent
           </button>
         </div>
         <div v-if="sorted === false" class="row">
-          <Bug v-for="b in bugs" :key="b.id" :bug="b" class="col-4" />
+          <Bug v-for="b in bugs" :key="b.id" :bug="b" class="col-lg-4" />
         </div>
         <div v-if="sorted === true" class="row">
-          <Bug v-for="b in sortedBugs" :key="b.id" :bug="b" class="col-4" />
+          <Bug v-for="b in sortedBugs" :key="b.id" :bug="b" class="col-lg-4" />
         </div>
       </div>
     </div>
@@ -71,8 +71,9 @@ export default {
       sortBugs() {
         sorted.value = true
       },
-      unsortBugs() {
+      async unsortBugs() {
         sorted.value = false
+        await bugsService.getBugs()
       }
     }
   }

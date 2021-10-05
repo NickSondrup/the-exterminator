@@ -13,12 +13,21 @@
     <div class="form-group">
       <label for="priority"></label>
       <input v-model="editable.priority"
-             type="number"
              name="priority"
              id="priority"
-             placeholder="Priority 1-5"
              class="form-control"
+             type="number"
+             placeholder="Threat Level 1-5"
       >
+      <!-- <option disabled selected value="">
+          Threat Level
+        </option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select> -->
     </div>
     <div class="form-group">
       <label for="description"></label>

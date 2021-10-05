@@ -13,7 +13,6 @@ class TrackedBugsService {
   }
 
   async checkTracked() {
-    debugger
     AppState.trackedCheck = false
     const accountId = AppState.account.id
     const trackedBugs = AppState.trackedBugs

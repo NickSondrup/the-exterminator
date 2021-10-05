@@ -44,10 +44,18 @@ import { bugsService } from '../services/BugsService.js'
 import Pop from '../utils/Pop.js'
 import { Modal } from 'bootstrap'
 import { useRoute } from 'vue-router'
+import { Bug } from '../models/Bug.js'
+import { watchEffect } from '@vue/runtime-core'
 export default {
-  setup() {
+  // props: {
+  //   bug: { type: Bug, default: () => new Bug() }
+  // },
+  setup(props) {
     const editable = ref({})
     const route = useRoute()
+    // watchEffect(() => {
+    //   editable.value = { ...props.bug }
+    // })
     return {
       editable,
 

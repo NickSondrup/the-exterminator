@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="row card-body">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <p>
               <b class="text-success">Bug Details:</b> {{ currentBug.description }}
             </p>
@@ -48,14 +48,16 @@
                 </button>
               </div>
             </div>
-          </div>
-          <div class="d-flex col-md-4">
-            <h5>Trackers:</h5>
-            <TrackedBug v-for="t in trackedBugs" :key="t.id" :tracked-bug="t" />
+            <div class="">
+              <h5>Trackers:</h5>
+              <div class="d-flex">
+                <TrackedBug v-for="t in trackedBugs" :key="t.id" :tracked-bug="t" />
+              </div>
+            </div>
           </div>
           <div class="col-md-4">
             <h5>Identifier:</h5>
-            <img :src="currentBug.creator.picture" alt="" height="65">
+            <img :src="currentBug.creator.picture" alt="" height="65" class="rounded-circle">
             <p>
               {{ currentBug.creator.name }}
             </p>
@@ -105,7 +107,9 @@
           </div>
           <div>
             <h6>Notes:</h6>
-            <Note v-for="n in notes" :key="n.id" :note="n" />
+            <div class="container-fluid">
+              <Note v-for="n in notes" :key="n.id" :note="n" />
+            </div>
           </div>
         </div>
       </div>
@@ -121,7 +125,7 @@
       Edit This Bug
     </template>
     <template #modal-body>
-      <EditForm />
+      <EditForm :current-bug="bug" />
     </template>
   </Modal>
 </template>
@@ -181,8 +185,10 @@ export default {
       },
       async closeBug(bugId) {
         try {
-          window.confirm()
-          await bugsService.closeBug(bugId)
+          const result = window.confirm("Are you sure it's dead?")
+          if (result === true) {
+            await bugsService.closeBug(bugId)
+          }
         } catch (error) {
           Pop.toast(error.message, 'error')
         }
