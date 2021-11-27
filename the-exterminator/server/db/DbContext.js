@@ -3,7 +3,7 @@ import { AccountSchema, ProfileSchema } from '../models/Account'
 import { BugSchema } from '../models/Bug.js'
 import { NoteSchema } from '../models/Note.js'
 import { TrackedBugSchema } from '../models/TrackedBug.js'
-import { ValueSchema } from '../models/Value'
+import { ValueSchema } from '../services/Value'
 
 class DbContext {
   Values = mongoose.model('Value', ValueSchema);

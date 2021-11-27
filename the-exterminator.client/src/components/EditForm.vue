@@ -47,15 +47,15 @@ import { useRoute } from 'vue-router'
 import { Bug } from '../models/Bug.js'
 import { watchEffect } from '@vue/runtime-core'
 export default {
-  // props: {
-  //   bug: { type: Bug, default: () => new Bug() }
-  // },
+  props: {
+    bug: { type: Bug, default: () => new Bug() }
+  },
   setup(props) {
     const editable = ref({})
     const route = useRoute()
-    // watchEffect(() => {
-    //   editable.value = { ...props.bug }
-    // })
+    watchEffect(() => {
+      editable.value = { ...props.bug }
+    })
     return {
       editable,
 

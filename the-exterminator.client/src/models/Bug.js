@@ -1,6 +1,6 @@
 
 export class Bug {
-  constructor(bugData) {
+  constructor(bugData = {}) {
     this.title = bugData.title
     this.priority = bugData.priority
     this.description = bugData.description
